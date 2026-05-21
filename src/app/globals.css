@@ -1,4 +1,12 @@
 @import "tailwindcss";
+/* This tells Tailwind to use the "dark" class for dark mode */
+@custom-variant dark (&:where(.dark, .dark *));
+
+
+@theme {
+  /* You can define custom colors here if you want later */
+  --color-school-blue: #004aad;
+}
 
 :root {
   --background: #ffffff;

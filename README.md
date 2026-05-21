@@ -1,36 +1,113 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# School Portal
+
+A full-stack school management web app built for real classroom use. Teachers can post news, manage student grades, and upload student artwork — all in three languages.
+
+## Features
+
+- **News feed** — Post and manage school announcements. Public read access; teacher-only posting.
+- **Gradebook** — Track student scores by subject, class level, and semester. Inline editing, auto-calculated letter grades, semester management.
+- **Art gallery** — Display student artwork anonymously. Teachers can bulk-upload images.
+- **Multilingual** — Full English, Thai, and Chinese support via dynamic `/[lang]/` routing.
+- **Dark mode** — System-aware theme toggle.
+- **Role-based access** — Teacher login via Supabase Auth. Unauthenticated users get read-only views.
+
+## Tech Stack
+
+| Layer | Technology |
+|---|---|
+| Framework | Next.js 16 (App Router) |
+| Language | TypeScript |
+| Styling | Tailwind CSS v4 |
+| Database & Auth | Supabase |
+| Icons | Lucide React |
+| Deployment | Vercel |
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+- Node.js 18+
+- A [Supabase](https://supabase.com) project with the following tables: `news`, `grades`, `semesters`, `student_art`
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+### Setup
+
+1. Clone the repo and install dependencies:
+   ```bash
+   git clone https://github.com/your-username/school-website.git
+   cd school-website
+   npm install
+   ```
+
+2. Create a `.env.local` file in the project root:
+   ```
+   NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
+   NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+   ```
+
+3. Run the development server:
+   ```bash
+   npm run dev
+   ```
+
+Open [http://localhost:3000](http://localhost:3000) — it redirects to `/en/news` by default.
+
+## Project Structure
+
+```
+src/
+├── app/
+│   ├── [lang]/         # Language-scoped routes (en / th / zh)
+│   │   ├── news/       # News feed page
+│   │   ├── grades/     # Gradebook (teacher only)
+│   │   ├── gallery/    # Art gallery
+│   │   └── login/      # Teacher login
+│   └── actions/        # Server Actions (news, grades, gallery)
+├── components/         # Reusable UI components
+├── lib/
+│   └── dictionaries.ts # All translations in one place
+└── utils/
+    ├── supabase/       # Supabase client helpers (server + client)
+    └── gradeUtils.ts   # Shared grade letter calculation
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Supabase Schema
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```sql
+-- News posts
+create table news (
+  id uuid primary key default gen_random_uuid(),
+  title text not null,
+  content text not null,
+  language text not null,  -- 'en' | 'th' | 'zh'
+  created_at timestamptz default now()
+);
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+-- Student grades
+create table grades (
+  id uuid primary key default gen_random_uuid(),
+  student_name text not null,
+  subject text not null,
+  grade_level text not null,
+  semester text not null,
+  academic_year text,
+  score numeric not null,
+  grade_letter text not null,
+  created_at timestamptz default now()
+);
 
-## Learn More
+-- Semester periods
+create table semesters (
+  name text primary key,
+  created_at timestamptz default now()
+);
 
-To learn more about Next.js, take a look at the following resources:
+-- Student artwork
+create table student_art (
+  id uuid primary key default gen_random_uuid(),
+  image_url text not null,
+  created_at timestamptz default now()
+);
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## License
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+MIT

@@ -19,20 +19,20 @@ export default async function GalleryPage({ params }: { params: Promise<{ lang: 
   const t = dict.gallery;
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 transition-colors duration-300">
+    <div className="h-dvh flex flex-col bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 transition-colors duration-300 overflow-y-auto">
       <Navbar lang={lang} isLoggedIn={!!user} />
-      <div className="max-w-6xl mx-auto p-4 md:p-8">
-        
+
+      {/* MAIN VIEWPORT AREA — flex-1 fills whatever space remains after the navbar */}
+      <div className="flex-1 flex flex-col min-h-0 max-w-6xl mx-auto px-4 md:px-8 w-full pb-4">
+
         {/* HEADER WITH 3 LANGUAGES */}
-        <header className="flex justify-between items-center mb-8 border-b border-slate-200 dark:border-slate-800 pb-6">
-          <div className="flex flex-col gap-2">
-            <h1 className="text-2xl font-black uppercase tracking-tight text-slate-900 dark:text-white">
-              {t.title}
-            </h1>
-          </div>
+        <header className="flex justify-between items-center mb-4 border-b border-slate-200 dark:border-slate-800 pb-4">
+          <h1 className="text-2xl font-black uppercase tracking-tight text-slate-900 dark:text-white">
+            {t.title}
+          </h1>
 
           <div className="flex items-center gap-6">
-            <div className="flex gap-3 mt-2 text-xs font-bold uppercase tracking-widest">
+            <div className="flex gap-3 text-xs font-bold uppercase tracking-widest">
               {['en', 'th', 'zh'].map((l) => (
                 <Link
                   key={l}
@@ -43,15 +43,14 @@ export default async function GalleryPage({ params }: { params: Promise<{ lang: 
                 </Link>
               ))}
             </div>
-
             <ThemeToggle />
             {user && <LogoutButton />}
           </div>
-
         </header>
 
-        <main className="flex flex-col items-center justify-center py-10">
-          <p className="text-sm font-medium text-slate-500 dark:text-slate-400 italic mb-10 text-center">
+        {/* GALLERY — flex-1 so it fills remaining height */}
+        <main className="flex-1 flex flex-col items-center justify-center min-h-0 gap-3">
+          <p className="text-sm font-medium text-slate-500 dark:text-slate-400 italic text-center">
             {t.subtitle}
           </p>
 
@@ -62,19 +61,18 @@ export default async function GalleryPage({ params }: { params: Promise<{ lang: 
               {t.noArt}
             </div>
           )}
-
-          {user && (
-            <section className="w-full max-w-2xl mt-24 pt-12 border-t border-slate-200 dark:border-slate-800">
-              <h2 className="text-xs font-black uppercase tracking-widest text-slate-400 mb-6 text-center">
-                {t.adminTitle}
-              </h2>
-              <BulkUploadForm />
-            </section>
-          )}
         </main>
       </div>
 
-      
+      {/* ADMIN UPLOAD — below the fold, scroll to reach */}
+      {user && (
+        <section className="max-w-2xl mx-auto w-full px-4 py-12 border-t border-slate-200 dark:border-slate-800">
+          <h2 className="text-xs font-black uppercase tracking-widest text-slate-400 mb-6 text-center">
+            {t.adminTitle}
+          </h2>
+          <BulkUploadForm />
+        </section>
+      )}
     </div>
   );
 }

@@ -19,52 +19,53 @@ export default async function GalleryPage({ params }: { params: Promise<{ lang: 
   const t = dict.gallery;
 
   return (
-    <div className="h-dvh flex flex-col bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 transition-colors duration-300 overflow-y-auto">
-      <Navbar lang={lang} isLoggedIn={!!user} />
+    <div className="bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 transition-colors duration-300">
 
-      {/* MAIN VIEWPORT AREA — flex-1 fills whatever space remains after the navbar */}
-      <div className="flex-1 flex flex-col min-h-0 max-w-6xl mx-auto px-4 md:px-8 w-full pb-4">
+      {/* VIEWPORT-PINNED SECTION — always exactly one screen tall */}
+      <div className="h-dvh flex flex-col overflow-hidden">
+        <Navbar lang={lang} isLoggedIn={!!user} />
 
-        {/* HEADER WITH 3 LANGUAGES */}
-        <header className="flex justify-between items-center mb-4 border-b border-slate-200 dark:border-slate-800 pb-4">
-          <h1 className="text-2xl font-black uppercase tracking-tight text-slate-900 dark:text-white">
-            {t.title}
-          </h1>
+        <div className="flex-1 flex flex-col min-h-0 max-w-6xl mx-auto px-4 md:px-8 w-full pb-4">
 
-          <div className="flex items-center gap-6">
-            <div className="flex gap-3 text-xs font-bold uppercase tracking-widest">
-              {['en', 'th', 'zh'].map((l) => (
-                <Link
-                  key={l}
-                  href={`/${l}/gallery`}
-                  className={currentLang === l ? "text-blue-600" : "opacity-40 hover:opacity-100"}
-                >
-                  {l}
-                </Link>
-              ))}
+          {/* HEADER */}
+          <header className="flex justify-between items-center mb-4 border-b border-slate-200 dark:border-slate-800 pb-4">
+            <h1 className="text-2xl font-black uppercase tracking-tight text-slate-900 dark:text-white">
+              {t.title}
+            </h1>
+            <div className="flex items-center gap-6">
+              <div className="flex gap-3 text-xs font-bold uppercase tracking-widest">
+                {['en', 'th', 'zh'].map((l) => (
+                  <Link
+                    key={l}
+                    href={`/${l}/gallery`}
+                    className={currentLang === l ? "text-blue-600" : "opacity-40 hover:opacity-100"}
+                  >
+                    {l}
+                  </Link>
+                ))}
+              </div>
+              <ThemeToggle />
+              {user && <LogoutButton />}
             </div>
-            <ThemeToggle />
-            {user && <LogoutButton />}
-          </div>
-        </header>
+          </header>
 
-        {/* GALLERY — flex-1 so it fills remaining height */}
-        <main className="flex-1 flex flex-col items-center justify-center min-h-0 gap-3">
-          <p className="text-sm font-medium text-slate-500 dark:text-slate-400 italic text-center">
-            {t.subtitle}
-          </p>
-
-          {art && art.length > 0 ? (
-            <ShuffleArt initialArt={art} buttonText={t.next} />
-          ) : (
-            <div className="p-20 border-2 border-dashed border-slate-200 dark:border-slate-800 rounded-3xl text-slate-400">
-              {t.noArt}
-            </div>
-          )}
-        </main>
+          {/* GALLERY — flex-1 fills all remaining height */}
+          <main className="flex-1 flex flex-col items-center justify-center min-h-0 gap-3">
+            <p className="text-sm font-medium text-slate-500 dark:text-slate-400 italic text-center">
+              {t.subtitle}
+            </p>
+            {art && art.length > 0 ? (
+              <ShuffleArt initialArt={art} buttonText={t.next} />
+            ) : (
+              <div className="p-20 border-2 border-dashed border-slate-200 dark:border-slate-800 rounded-3xl text-slate-400">
+                {t.noArt}
+              </div>
+            )}
+          </main>
+        </div>
       </div>
 
-      {/* ADMIN UPLOAD — below the fold, scroll to reach */}
+      {/* ADMIN UPLOAD — completely outside the h-dvh block, scroll down to reach */}
       {user && (
         <section className="max-w-2xl mx-auto w-full px-4 py-12 border-t border-slate-200 dark:border-slate-800">
           <h2 className="text-xs font-black uppercase tracking-widest text-slate-400 mb-6 text-center">

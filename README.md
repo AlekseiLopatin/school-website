@@ -7,7 +7,7 @@ A full-stack school management web app built for real classroom use. Teachers ca
 - **News feed** — Post and manage school announcements. Public read access; teacher-only posting.
 - **Gradebook** — Track student scores by subject, class level, and semester. Inline editing, auto-calculated letter grades, semester management.
 - **Art gallery** — Display student artwork anonymously. Teachers can bulk-upload images.
-- **Multilingual** — Full English, Thai, and Chinese support via dynamic `/[lang]/` routing.
+- **Multilingual** — Full English, Thai, and Chinese support via dynamic `/[lang]/` routing. News posted in any language is automatically translated into all three languages simultaneously using Google Translate, so teachers only need to post once.
 - **Dark mode** — System-aware theme toggle.
 - **Role-based access** — Teacher login via Supabase Auth. Unauthenticated users get read-only views.
 

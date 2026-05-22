@@ -2,6 +2,10 @@
 
 A full-stack school management web app built for real classroom use. Teachers can post news, manage student grades, and upload student artwork — all in three languages.
 
+<p align="center">
+  <img src="public/screenshot.png" alt="School Portal screenshot" width="800">
+</p>
+
 ## Features
 
 - **News feed** — Post and manage school announcements. Public read access; teacher-only posting.

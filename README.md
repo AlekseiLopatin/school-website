@@ -2,6 +2,21 @@
 
 A full-stack school management web app built for real classroom use. Teachers can post news, manage student grades, and upload student artwork — all in three languages.
 
+I built it for the school where I teach in Thailand, so staff could replace paper grade sheets and scattered spreadsheets with a single tool that works in English, Thai, and Chinese.
+
+<p align="center">
+  <a href="https://school.alekseilopatin.com/"><strong>🔗 Live Demo</strong></a>
+</p>
+
+<p align="center">
+  <img alt="Next.js" src="https://img.shields.io/badge/Next.js-16-000000?style=flat-square&logo=next.js&logoColor=white">
+  <img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-5-3178C6?style=flat-square&logo=typescript&logoColor=white">
+  <img alt="Tailwind CSS" src="https://img.shields.io/badge/Tailwind_CSS-4-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white">
+  <img alt="Supabase" src="https://img.shields.io/badge/Supabase-3FCF8E?style=flat-square&logo=supabase&logoColor=white">
+  <img alt="License" src="https://img.shields.io/github/license/AlekseiLopatin/school-website?style=flat-square&color=blue">
+  <img alt="Last commit" src="https://img.shields.io/github/last-commit/AlekseiLopatin/school-website?style=flat-square">
+</p>
+
 <p align="center">
   <img src="public/screenshot.png" alt="School Portal screenshot" width="800">
 </p>
@@ -29,7 +44,7 @@ A full-stack school management web app built for real classroom use. Teachers ca
 ## Getting Started
 
 ### Prerequisites
-- Node.js 18+
+- Node.js 20.9+ (required by Next.js 16)
 - A [Supabase](https://supabase.com) project with the following tables: `news`, `grades`, `semesters`, `student_art`
 
 ### Setup
@@ -114,4 +129,4 @@ create table student_art (
 
 ## License
 
-MIT
+Distributed under the MIT License. See [`LICENSE`](LICENSE) for details.
